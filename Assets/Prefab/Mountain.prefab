@@ -505,3 +505,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Background
   background: {fileID: 8635969174813217998}
+  speed: 2
