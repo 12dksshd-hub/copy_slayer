@@ -1,0 +1,35 @@
+{
+    "version": 1,
+    "name": "Touch",
+    "maps": [
+        {
+            "name": "UI",
+            "id": "a384ed56-faae-45ac-9a63-aea07b0cf397",
+            "actions": [
+                {
+                    "name": "touch",
+                    "type": "Button",
+                    "id": "a4c1c615-3b85-4edc-a6ee-94780c6300ee",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Press",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "9bc1c0ec-1016-4f04-b084-a8e34fcf271f",
+                    "path": "<Pointer>/press",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "",
+                    "action": "touch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

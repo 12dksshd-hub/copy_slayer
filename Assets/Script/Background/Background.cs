@@ -9,15 +9,24 @@ public class Background : MonoBehaviour
 
     [SerializeField]
     private float speed;
+    private int count;
+    private bool enableAutoMove = true;
 
     public float Width
     {
         get { return width; }
     }
 
+    public bool EnableAutoMove
+    {
+        get;
+        set;
+    }
+
     void Awake()
     {
         width = background.bounds.size.x;
+        UpdateBackgroundCount();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -31,6 +40,9 @@ public class Background : MonoBehaviour
     {
         if (transform.position.x <= -width)
             ResetPosition();
+
+        if (enableAutoMove == true)
+            Move();
     }
 
     public void Move()
@@ -40,6 +52,17 @@ public class Background : MonoBehaviour
 
     private void ResetPosition()
     {
-        transform.Translate(Vector3.right * width * 2);
+        transform.Translate(Vector3.right * width * count);
+    }
+
+    private int GetCurrentBackgroundCount()
+    {
+        int count = FindObjectsByType<Background>(FindObjectsSortMode.None).Length;
+        return count;
+    }
+
+    public void UpdateBackgroundCount()
+    {
+        count = GetCurrentBackgroundCount();
     }
 }

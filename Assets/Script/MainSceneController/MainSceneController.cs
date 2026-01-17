@@ -22,21 +22,24 @@ public class MainSceneController : MonoBehaviour
             new Vector3(backgroundPosition.x + backgroundComponent.Width, backgroundPosition.y, backgroundPosition.z),
             Quaternion.identity);
 
+        backgroundComponent.UpdateBackgroundCount();
+        backgroundComponent2.UpdateBackgroundCount();
+
         playerAnimator = playerObj.GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerAnimator.GetBool("run") == true)
+        if (playerAnimator.GetBool("run") == true && backgroundComponent.EnableAutoMove == false)
         {
-            MoveBackground();
+            backgroundComponent.EnableAutoMove = true;
+            backgroundComponent2.EnableAutoMove = true;
         }
-    }
-
-    private void MoveBackground()
-    {
-        backgroundComponent.Move();
-        backgroundComponent2.Move();
+        else if(playerAnimator.GetBool("run") == false && backgroundComponent.EnableAutoMove == true)
+        {
+            backgroundComponent.EnableAutoMove = false;
+            backgroundComponent2.EnableAutoMove = false;
+        }
     }
 }
