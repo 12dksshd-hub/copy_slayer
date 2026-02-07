@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class MainSceneController : MonoBehaviour
@@ -10,6 +11,10 @@ public class MainSceneController : MonoBehaviour
     [SerializeField]
     private GameObject playerObj;
     private Animator playerAnimator;
+
+    [SerializeField]
+    private GameObject monster;
+    private Monster monsterComponent;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -26,6 +31,8 @@ public class MainSceneController : MonoBehaviour
         backgroundComponent2.UpdateBackgroundCount();
 
         playerAnimator = playerObj.GetComponent<Animator>();
+        
+        monsterComponent = monster.GetComponent<Monster>();
     }
 
     // Update is called once per frame
@@ -35,11 +42,15 @@ public class MainSceneController : MonoBehaviour
         {
             backgroundComponent.EnableAutoMove = true;
             backgroundComponent2.EnableAutoMove = true;
+
+            monsterComponent.EnableAutoMove = true;
         }
-        else if(playerAnimator.GetBool("run") == false && backgroundComponent.EnableAutoMove == true)
+        else if (playerAnimator.GetBool("run") == false && backgroundComponent.EnableAutoMove == true)
         {
             backgroundComponent.EnableAutoMove = false;
             backgroundComponent2.EnableAutoMove = false;
+
+            monsterComponent.EnableAutoMove = false;
         }
     }
 }

@@ -1,3 +1,4 @@
+using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -19,8 +20,11 @@ public class Background : MonoBehaviour
 
     public bool EnableAutoMove
     {
-        get;
-        set;
+        get { return enableAutoMove; }
+        set
+        {
+            enableAutoMove = value;
+        }
     }
 
     void Awake()
@@ -32,7 +36,7 @@ public class Background : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+
     }
 
     // Update is called once per frame
@@ -45,7 +49,7 @@ public class Background : MonoBehaviour
             Move();
     }
 
-    public void Move()
+    private void Move()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
     }
