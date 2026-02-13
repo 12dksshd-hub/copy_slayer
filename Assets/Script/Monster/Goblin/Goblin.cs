@@ -46,14 +46,14 @@ public class Goblin : Monster
         currentAnimationState = AnimationState.idle;
     }
 
-    public void Hit(float damage)
+    public override void Hit(Damage damage)
     {
         if(currentHP > 0)
         {
             animator.SetTrigger("hit");
             currentAnimationState = AnimationState.hit;
 
-            currentHP -= damage;
+            currentHP -= damage.GetTrueDamage();
             if (currentHP < 0)
                 Die();
         }

@@ -4,22 +4,55 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
     private Animator animator;
+    private PlayerAnimationEventSender animationEventSender;
+    private PlayerSwordAttackStateBehavior swordAttackStateBehavior;
+    public enum AnimationState
+    {
+        idle,
+        run,
+        attack,
+        hit,
+        die
+    }
+    private AnimationState currentAnimationState;
+    [SerializeField]
+    private GameObject swordAttack;
 
     private HashSet<Monster> detectedMonsters = new HashSet<Monster>();
+
+    private int attackPower;
+
+    public AnimationState CurrentAnimationState
+    {
+        get
+        {
+            return currentAnimationState;
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        animator = GetComponentInChildren<Animator>();
+        animationEventSender = GetComponentInChildren<PlayerAnimationEventSender>();
+        animationEventSender.GiveDamage += GiveDamage;
+
+        swordAttackStateBehavior = animator.GetBehaviour<PlayerSwordAttackStateBehavior>();
+        swordAttackStateBehavior.OnAttackEnd += AttackEnd;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (animator.GetBool("run") == false && detectedMonsters.Count == 0)
+        if (detectedMonsters.Count == 0)
         {
-            Run();
+            TryRun();
+        }
+
+        if(detectedMonsters.Count > 0)
+        {
+            TryAttack();
         }
     }
 
@@ -35,13 +68,44 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void Run()
+    private void TryAttack()
     {
-        animator.SetBool("run", true);
+        if (currentAnimationState != AnimationState.attack)
+        {
+            animator.SetTrigger("attack");
+            swordAttack.SetActive(true);
+            currentAnimationState = AnimationState.attack;
+        }
+    }
+
+    private void AttackEnd()
+    {
+        swordAttack.SetActive(false);
+        currentAnimationState = AnimationState.idle;
+    }
+
+    private void GiveDamage()
+    {
+        Damage damage = new Damage(attackPower);
+
+        foreach(Monster detectedMonster in detectedMonsters)
+        {
+            detectedMonster.Hit(damage);
+        }
+    }
+
+    private void TryRun()
+    {
+        if(currentAnimationState != AnimationState.run)
+        {
+            animator.SetBool("run", true);
+            currentAnimationState = AnimationState.run;
+        }
     }
 
     private void Stop()
     {
         animator.SetBool("run", false);
+        currentAnimationState = AnimationState.idle;
     }
 }

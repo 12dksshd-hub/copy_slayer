@@ -37,6 +37,8 @@ public abstract class Monster : MonoBehaviour
             Move();
     }
 
+    public abstract void Hit(Damage damage);
+
     private void Move()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
