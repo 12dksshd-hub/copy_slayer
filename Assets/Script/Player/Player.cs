@@ -8,6 +8,16 @@ public class Player : MonoBehaviour
     private Animator animator;
     private PlayerAnimationEventSender animationEventSender;
     private PlayerSwordAttackStateBehavior swordAttackStateBehavior;
+
+    private AnimationState currentAnimationState;
+    [SerializeField]
+    private GameObject swordAttack;
+
+    private HashSet<Monster> detectedMonsters = new HashSet<Monster>();
+
+    [SerializeField]
+    private int attackPoint;
+
     public enum AnimationState
     {
         idle,
@@ -16,13 +26,6 @@ public class Player : MonoBehaviour
         hit,
         die
     }
-    private AnimationState currentAnimationState;
-    [SerializeField]
-    private GameObject swordAttack;
-
-    private HashSet<Monster> detectedMonsters = new HashSet<Monster>();
-
-    private int attackPower;
 
     public AnimationState CurrentAnimationState
     {
@@ -86,7 +89,7 @@ public class Player : MonoBehaviour
 
     private void GiveDamage()
     {
-        Damage damage = new Damage(attackPower);
+        Damage damage = new Damage(attackPoint);
 
         foreach(Monster detectedMonster in detectedMonsters)
         {

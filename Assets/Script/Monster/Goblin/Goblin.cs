@@ -16,8 +16,10 @@ public class Goblin : Monster
         die
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
+
         animator = GetComponentInChildren<Animator>();
         
         animationEventSender = GetComponentInChildren<GoblinAnimationEventSender>();
@@ -43,7 +45,8 @@ public class Goblin : Monster
 
     private void AttackEnd()
     {
-        currentAnimationState = AnimationState.idle;
+        if (currentAnimationState == AnimationState.attack)
+            currentAnimationState = AnimationState.idle;
     }
 
     public override void Hit(Damage damage)
@@ -54,19 +57,20 @@ public class Goblin : Monster
             currentAnimationState = AnimationState.hit;
 
             currentHP -= damage.GetTrueDamage();
-            if (currentHP < 0)
+            if (currentHP <= 0)
                 Die();
         }
     }
 
     private void HitEnd()
     {
-        currentAnimationState = AnimationState.idle;
+        if (currentAnimationState == AnimationState.hit)
+            currentAnimationState = AnimationState.idle;
     }
 
     private void Die()
     {
-        animator.SetTrigger("die");
+        animator.SetBool("die", true);
         currentAnimationState = AnimationState.die;
     }
 }

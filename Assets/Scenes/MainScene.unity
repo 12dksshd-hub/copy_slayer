@@ -1020,6 +1020,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Player
   animator: {fileID: 727301846}
   swordAttack: {fileID: 749959944}
+  attackPoint: 1
 --- !u!61 &1774126401
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1104,6 +1105,10 @@ PrefabInstance:
     - target: {fileID: 418324689250714226, guid: 05c4f451d6ee3e7479de85432e2c877e, type: 3}
       propertyPath: m_Name
       value: Goblin
+      objectReference: {fileID: 0}
+    - target: {fileID: 1402630820283915078, guid: 05c4f451d6ee3e7479de85432e2c877e, type: 3}
+      propertyPath: maxHP
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8858621676582970175, guid: 05c4f451d6ee3e7479de85432e2c877e, type: 3}
       propertyPath: m_LocalPosition.x

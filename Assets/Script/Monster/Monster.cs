@@ -2,12 +2,12 @@ using UnityEngine;
 
 public abstract class Monster : MonoBehaviour
 {
+    [SerializeField]
     protected float maxHP;
     protected float currentHP;
 
     protected float damage;
 
-    [SerializeField]
     protected Player target;
 
     [SerializeField]
@@ -29,6 +29,11 @@ public abstract class Monster : MonoBehaviour
         {
             enableAutoMove = value;
         }
+    }
+
+    protected virtual void Start()
+    {
+        currentHP = maxHP;
     }
 
     protected virtual void Update()
