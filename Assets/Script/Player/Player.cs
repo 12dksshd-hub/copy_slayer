@@ -2,8 +2,14 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IHP
 {
+    [SerializeField]
+    protected float maxHP;
+    protected float currentHP;
+
+    public event Action OnTakeDamage;
+
     [SerializeField]
     private Animator animator;
     private PlayerAnimationEventSender animationEventSender;
@@ -17,6 +23,18 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private int attackPoint;
+
+    public float MaxHP
+    {
+        get { return maxHP; }
+        protected set { maxHP = value; }
+    }
+
+    public float CurrentHP
+    {
+        get { return currentHP; }
+        protected set { currentHP = value; }
+    }
 
     public enum AnimationState
     {

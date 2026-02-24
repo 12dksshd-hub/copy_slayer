@@ -1,3 +1,4 @@
+using System.Dynamic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -14,6 +15,11 @@ public class Goblin : Monster
         attack,
         hit,
         die
+    }
+
+    protected override void Awake()
+    {
+        base.Awake();
     }
 
     protected override void Start()
@@ -57,6 +63,8 @@ public class Goblin : Monster
             currentAnimationState = AnimationState.hit;
 
             currentHP -= damage.GetTrueDamage();
+            InvokeOnTakeDamage();
+
             if (currentHP <= 0)
                 Die();
         }

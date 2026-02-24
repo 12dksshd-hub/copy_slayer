@@ -1,10 +1,13 @@
+using System;
 using UnityEngine;
 
-public abstract class Monster : MonoBehaviour
+public abstract class Monster : MonoBehaviour, IHP
 {
     [SerializeField]
     protected float maxHP;
     protected float currentHP;
+
+    public event Action OnTakeDamage;
 
     protected float damage;
 
@@ -13,6 +16,18 @@ public abstract class Monster : MonoBehaviour
     [SerializeField]
     private float speed;
     private bool enableAutoMove = true;
+
+    public float MaxHP
+    {
+        get { return maxHP; }
+        protected set { maxHP = value; }
+    }
+
+    public float CurrentHP
+    {
+        get { return currentHP; }
+        protected set { currentHP = value; }
+    }
 
     public Player Target
     {
@@ -31,9 +46,14 @@ public abstract class Monster : MonoBehaviour
         }
     }
 
-    protected virtual void Start()
+    protected virtual void Awake()
     {
         currentHP = maxHP;
+    }
+
+    protected virtual void Start()
+    {
+        
     }
 
     protected virtual void Update()
@@ -43,6 +63,11 @@ public abstract class Monster : MonoBehaviour
     }
 
     public abstract void Hit(Damage damage);
+
+    protected void InvokeOnTakeDamage()
+    {
+        OnTakeDamage?.Invoke();
+    }
 
     private void Move()
     {
