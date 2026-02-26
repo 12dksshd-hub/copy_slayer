@@ -33,7 +33,10 @@ public abstract class Monster : MonoBehaviour, IHP
     {
         set
         {
-            target = value;
+            if(value is Player)
+            {
+                target = value;
+            }
         }
     }
 

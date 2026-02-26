@@ -9,6 +9,9 @@ public class Goblin : Monster
 
     private AnimationState currentAnimationState = AnimationState.idle;
 
+    [SerializeField]
+    private float attackPoint;
+
     private enum AnimationState
     {
         idle,
@@ -29,6 +32,7 @@ public class Goblin : Monster
         animator = GetComponentInChildren<Animator>();
         
         animationEventSender = GetComponentInChildren<GoblinAnimationEventSender>();
+        animationEventSender.OnGiveDamage += GiveDamage;
         animationEventSender.OnAttackEnd += AttackEnd;
         animationEventSender.OnHitEnd += HitEnd;
     }
@@ -53,6 +57,12 @@ public class Goblin : Monster
     {
         if (currentAnimationState == AnimationState.attack)
             currentAnimationState = AnimationState.idle;
+    }
+
+    private void GiveDamage()
+    {
+        Damage damage = new Damage(attackPoint);
+        target.Hit(damage);
     }
 
     public override void Hit(Damage damage)

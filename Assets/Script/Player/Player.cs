@@ -53,6 +53,11 @@ public class Player : MonoBehaviour, IHP
         }
     }
 
+    void Awake()
+    {
+        CurrentHP = MaxHP;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -112,6 +117,18 @@ public class Player : MonoBehaviour, IHP
         foreach(Monster detectedMonster in detectedMonsters)
         {
             detectedMonster.Hit(damage);
+        }
+    }
+
+    public void Hit(Damage damage)
+    {
+        if (currentHP > 0)
+        {
+            currentHP -= damage.GetTrueDamage();
+            OnTakeDamage?.Invoke();
+
+            //if (currentHP <= 0)
+            //    Die();
         }
     }
 
